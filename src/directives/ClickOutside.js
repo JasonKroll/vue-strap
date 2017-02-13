@@ -1,18 +1,27 @@
+"use strict";
+
 /**
  * Click outside directive
  */
 var binded = []
 
-function handler (e) { binded.forEach(el => { if (!el.node.contains(e.target)) el.callback(e) }) }
+
+function handler(e) {
+  binded.forEach(function (el) {
+    if (!el.node.contains(e.target)) el.callback(e);
+  });
+}
 
 function addListener (node, callback) {
   if (!binded.length) document.addEventListener('click', handler, false)
   binded.push({node, callback})
 }
 
-function removeListener (node, callback) {
-  binded = binded.filter(el => el.node !== node ? true : !callback ? false : el.callback !== callback)
-  if (!binded.length) document.removeEventListener('click', handler, false)
+function removeListener(node, callback) {
+  binded = binded.filter(function (el) {
+    return el.node !== node ? true : !callback ? false : el.callback !== callback;
+  });
+  if (!binded.length) document.removeEventListener('click', handler, false);
 }
 
 export default {
